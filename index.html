@@ -8,9 +8,8 @@
 <meta property="og:title" content="담온 LIVE — 수제 반찬 라이브 커머스">
 <meta property="og:description" content="산지에서 식탁까지, 라이브로 만나는 정직한 반찬">
 <meta property="og:type" content="website">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700;900&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fonts-archive/MaruBuri/subsets/MaruBuri-dynamic-subset.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <style>
 :root{
@@ -18,14 +17,16 @@
   --line:rgba(34,27,20,.14); --line-soft:rgba(34,27,20,.08);
   --accent:#A64B21; --accent-deep:#7E3714; --accent-soft:#F4E5DA;
   --live:#D6402B; --cream-2:#F2EBDE; --night:#171310; --night-2:#221C16;
-  --serif:'Noto Serif KR','Apple SD Gothic Neo',serif;
+  --serif:'Maru Buri','Apple SD Gothic Neo',serif;
   --sans:'Pretendard Variable',Pretendard,-apple-system,sans-serif;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{
   font-family:var(--sans);background:var(--bg);color:var(--ink);
-  line-height:1.72;font-size:16px;word-break:keep-all;-webkit-font-smoothing:antialiased;
+  line-height:1.72;font-size:16px;word-break:keep-all;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+  text-rendering:optimizeLegibility;
 }
 img{max-width:100%;display:block}
 a{color:inherit;text-decoration:none}
@@ -37,8 +38,9 @@ ul{list-style:none}
 }
 .eyebrow::before{content:"";width:26px;height:1px;background:var(--accent)}
 .sec-title{
-  font-family:var(--serif);font-weight:900;
-  font-size:clamp(1.7rem,3.6vw,2.6rem);line-height:1.32;letter-spacing:-.015em;margin:.9rem 0 1rem;
+  font-family:var(--serif);font-weight:700;
+  font-size:clamp(1.75rem,3.7vw,2.7rem);line-height:1.38;letter-spacing:-.01em;margin:.9rem 0 1rem;
+  text-wrap:balance;
 }
 .sec-lede{color:var(--ink-2);max-width:34em}
 section{padding:clamp(4rem,9vw,7.5rem) 0}
@@ -55,7 +57,7 @@ header.solid{background:rgba(250,246,239,.92);backdrop-filter:blur(10px);box-sha
 .nav{display:flex;align-items:center;justify-content:space-between;height:72px}
 .brand{display:flex;align-items:baseline;gap:.55rem;color:#fff}
 header.solid .brand{color:var(--ink)}
-.brand b{font-family:var(--serif);font-weight:900;font-size:1.3rem;letter-spacing:-.01em}
+.brand b{font-family:var(--serif);font-weight:700;font-size:1.3rem;letter-spacing:-.01em}
 .brand span{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;opacity:.72}
 .nav-links{display:flex;gap:1.9rem;font-size:.93rem;font-weight:600;color:rgba(255,255,255,.88)}
 header.solid .nav-links{color:var(--ink-2)}
@@ -81,13 +83,26 @@ header.solid .nav-links{color:var(--ink-2)}
 }
 @keyframes kenzoom{from{transform:scale(1) translate(0,0)}to{transform:scale(1.1) translate(-1.4%,-1%)}}
 @keyframes kenzoom2{from{transform:scale(1.1) translate(1.2%,0)}to{transform:scale(1) translate(0,.8%)}}
-.hero-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(23,19,16,.44) 0%,rgba(23,19,16,.16) 42%,rgba(23,19,16,.8) 100%)}
+.hero-bg::after{
+  content:"";position:absolute;inset:0;
+  background:
+    linear-gradient(90deg,rgba(20,16,13,.84) 0%,rgba(20,16,13,.5) 44%,rgba(20,16,13,.12) 74%),
+    linear-gradient(180deg,rgba(20,16,13,.5) 0%,transparent 34%,rgba(20,16,13,.72) 100%);
+}
 .hero-inner{position:relative;width:100%;padding-bottom:clamp(3rem,7vw,5.5rem)}
-.hero-eyebrow{color:#F0DFC5;font-size:.78rem;font-weight:700;letter-spacing:.26em;text-transform:uppercase}
+.hero-eyebrow{
+  color:#F0DFC5;font-size:.78rem;font-weight:700;
+  display:flex;align-items:center;gap:.85rem;flex-wrap:wrap;
+}
+/* 라틴 라벨만 넓은 트래킹 — 한글에 큰 자간을 주면 조판이 무너진다 */
+.lat{letter-spacing:.26em;text-transform:uppercase}
+.ko{letter-spacing:.01em;font-weight:600;opacity:.92}
+.lat + .ko::before{content:"";display:inline-block;width:1px;height:.78em;
+  background:currentColor;opacity:.45;margin-right:.85rem;vertical-align:-.06em}
 .hero h1{
-  font-family:var(--serif);font-weight:900;
-  font-size:clamp(2.4rem,6.4vw,4.5rem);line-height:1.24;letter-spacing:-.02em;
-  margin:1rem 0 1.1rem;max-width:12em;
+  font-family:var(--serif);font-weight:700;
+  font-size:clamp(2.5rem,6.6vw,4.7rem);line-height:1.3;letter-spacing:-.015em;
+  margin:1.1rem 0 1.2rem;max-width:12em;text-wrap:balance;
 }
 .hero p{color:rgba(255,255,255,.85);max-width:31em;font-size:clamp(1rem,1.6vw,1.13rem)}
 .hero-actions{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:1.8rem}
@@ -125,7 +140,7 @@ header.solid .nav-links{color:var(--ink-2)}
 .sched-row.today .day{color:var(--accent)}
 .sched-row.today .day::after{
   content:"오늘";font-family:var(--sans);font-size:.62rem;font-weight:700;
-  letter-spacing:.08em;color:var(--accent);border:1px solid rgba(166,75,33,.4);
+  letter-spacing:.02em;color:var(--accent);border:1px solid rgba(166,75,33,.4);
   border-radius:3px;padding:.08rem .34rem;
 }
 .sched-row.is-onair h3{color:var(--accent-deep)}
@@ -176,14 +191,14 @@ header.solid .nav-links{color:var(--ink-2)}
 /* ── 브랜드 약속 ── */
 .promise{background:var(--cream-2)}
 .pr-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:2rem;margin-top:2.4rem}
-.pr-item .num{font-family:var(--serif);font-weight:900;font-size:2rem;color:var(--accent);opacity:.85}
+.pr-item .num{font-family:var(--serif);font-weight:700;font-size:2rem;color:var(--accent);opacity:.85}
 .pr-item h3{font-size:1.05rem;font-weight:700;margin:.5rem 0 .3rem}
 .pr-item p{font-size:.9rem;color:var(--ink-2)}
 
 /* ── 알림 신청 ── */
 .notify-wrap{display:grid;grid-template-columns:1.1fr 1fr;gap:clamp(2rem,5vw,4rem);align-items:center}
 .nt-form{background:#fff;border:1px solid var(--line);border-radius:14px;padding:clamp(1.4rem,3vw,2.2rem)}
-.nt-form h3{font-family:var(--serif);font-weight:900;font-size:1.3rem;margin-bottom:1.2rem}
+.nt-form h3{font-family:var(--serif);font-weight:700;font-size:1.3rem;margin-bottom:1.2rem}
 .field{margin-bottom:1rem}
 .field label{display:block;font-size:.8rem;font-weight:700;color:var(--ink-2);margin-bottom:.35rem}
 .field input,.field select{
@@ -195,7 +210,7 @@ header.solid .nav-links{color:var(--ink-2)}
 .nt-submit:hover{background:var(--accent-deep)}
 .nt-done{display:none;text-align:center;padding:2.5rem 0}
 .nt-done .mark{font-size:2.2rem}
-.nt-done h4{font-family:var(--serif);font-weight:900;font-size:1.2rem;margin-top:.6rem}
+.nt-done h4{font-family:var(--serif);font-weight:700;font-size:1.2rem;margin-top:.6rem}
 .nt-done p{font-size:.88rem;color:var(--ink-2);margin-top:.4rem}
 .form-note{font-size:.76rem;color:var(--ink-3);margin-top:.8rem;text-align:center}
 @media (max-width:820px){.notify-wrap{grid-template-columns:1fr}}
@@ -203,10 +218,10 @@ header.solid .nav-links{color:var(--ink-2)}
 /* ── footer ── */
 footer{background:var(--night);color:rgba(255,255,255,.72);padding:3.5rem 0 2.5rem;margin-top:clamp(4rem,8vw,7rem)}
 .f-top{display:flex;flex-wrap:wrap;justify-content:space-between;gap:2rem;padding-bottom:2rem;border-bottom:1px solid rgba(255,255,255,.12)}
-.f-brand b{font-family:var(--serif);font-weight:900;font-size:1.4rem;color:#fff}
+.f-brand b{font-family:var(--serif);font-weight:700;font-size:1.4rem;color:#fff}
 .f-brand p{font-size:.84rem;margin-top:.5rem;color:rgba(255,255,255,.5)}
 .f-links{display:flex;gap:2.5rem;flex-wrap:wrap}
-.f-links h4{font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:.7rem}
+.f-links h4{font-size:.76rem;font-weight:700;letter-spacing:.03em;color:rgba(255,255,255,.5);margin-bottom:.8rem}
 .f-links a{display:block;font-size:.88rem;padding:.22rem 0}
 .f-links a:hover{color:#fff}
 .f-bottom{padding-top:1.6rem;font-size:.76rem;color:rgba(255,255,255,.4);display:flex;flex-wrap:wrap;gap:.6rem;justify-content:space-between}
@@ -234,7 +249,7 @@ footer{background:var(--night);color:rgba(255,255,255,.72);padding:3.5rem 0 2.5r
   padding:1.4rem clamp(1.4rem,4vw,3rem);
 }
 .live-brand{display:flex;align-items:center;gap:1.1rem}
-.live-brand b{font-family:var(--serif);font-weight:900;font-size:1.2rem;letter-spacing:-.01em}
+.live-brand b{font-family:var(--serif);font-weight:700;font-size:1.2rem;letter-spacing:-.01em}
 .onair{
   display:inline-flex;align-items:center;gap:.5rem;
   font-size:.68rem;font-weight:800;letter-spacing:.28em;color:rgba(255,255,255,.85);
@@ -255,13 +270,14 @@ footer{background:var(--night);color:rgba(255,255,255,.72);padding:3.5rem 0 2.5r
   max-width:1360px;width:100%;margin:0 auto;
 }
 .live-hero .live-eyebrow{
-  font-size:.7rem;font-weight:700;letter-spacing:.3em;color:var(--champagne);
-  text-transform:uppercase;display:flex;align-items:center;gap:.8rem;
+  font-size:.72rem;font-weight:700;color:var(--champagne);
+  display:flex;align-items:center;gap:.8rem;flex-wrap:wrap;
 }
 .live-hero .live-eyebrow::before{content:"";width:34px;height:1px;background:var(--champagne)}
 .live-hero h2{
-  font-family:var(--serif);font-weight:900;letter-spacing:-.02em;
-  font-size:clamp(2.2rem,4.6vw,3.6rem);line-height:1.22;margin:1rem 0 .9rem;
+  font-family:var(--serif);font-weight:700;letter-spacing:-.015em;
+  font-size:clamp(2.3rem,4.8vw,3.7rem);line-height:1.28;margin:1.05rem 0 1rem;
+  text-wrap:balance;
 }
 .live-hero .now{font-size:.95rem;color:rgba(255,255,255,.72);max-width:26em;line-height:1.7}
 .live-actions{display:flex;align-items:center;gap:1.3rem;margin-top:2rem}
@@ -304,7 +320,7 @@ footer{background:var(--night);color:rgba(255,255,255,.72);padding:3.5rem 0 2.5r
 .deal-cta{
   margin-top:1.4rem;display:block;text-align:center;
   border:1px solid var(--champagne);color:var(--champagne);
-  font-weight:700;font-size:.84rem;letter-spacing:.18em;padding:.95rem;border-radius:2px;
+  font-weight:700;font-size:.9rem;letter-spacing:.04em;padding:.95rem;border-radius:2px;
   transition:background .3s,color .3s;
 }
 .deal-cta:hover{background:var(--champagne);color:var(--night)}
@@ -320,7 +336,7 @@ footer{background:var(--night);color:rgba(255,255,255,.72);padding:3.5rem 0 2.5r
   background:rgba(23,19,16,.62);backdrop-filter:blur(14px);
   border:1px solid rgba(255,255,255,.16);color:rgba(255,255,255,.92);
   padding:.6rem 1.05rem;border-radius:2px;
-  font-size:.75rem;font-weight:600;letter-spacing:.14em;
+  font-size:.78rem;font-weight:600;letter-spacing:.02em;
   box-shadow:0 4px 24px rgba(23,19,16,.18);
   transition:background .3s,border-color .3s;
 }
@@ -345,7 +361,7 @@ footer{background:var(--night);color:rgba(255,255,255,.72);padding:3.5rem 0 2.5r
   </div>
   <div class="live-main">
     <div class="live-hero">
-      <p class="live-eyebrow">Damon Live · 지금 방송 중</p>
+      <p class="live-eyebrow"><span class="lat">Damon Live</span><span class="ko">지금 방송 중</span></p>
       <h2 id="liveTitle">심야 야식 라이브</h2>
       <p class="now" id="liveNow">담온의 주방을 실시간으로 보여드립니다. 라이브 특가는 방송 중에만 적용됩니다.</p>
       <div class="live-actions">
@@ -378,7 +394,7 @@ footer{background:var(--night);color:rgba(255,255,255,.72);padding:3.5rem 0 2.5r
 </div>
 
 <button class="live-preview-btn" id="livePreview" aria-label="라이브 전환 기능 미리보기">
-  <span class="dot"></span> LIVE 미리보기
+  <span class="dot"></span><span class="lat" style="font-size:.7rem">Live</span> 미리보기
 </button>
 
 <header id="hd">
@@ -400,10 +416,10 @@ footer{background:var(--night);color:rgba(255,255,255,.72);padding:3.5rem 0 2.5r
   <div class="hero-bg" id="heroSlides">
     <img class="ken active" src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1920&q=78&fit=crop&auto=format" alt="정성껏 차려진 따뜻한 상차림" fetchpriority="high">
     <img class="ken" src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=1920&q=74&fit=crop&auto=format" alt="주방에서 요리하는 담온의 손길" loading="lazy">
-    <img class="ken" src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=1920&q=74&fit=crop&auto=format" alt="형형색색의 신선한 제철 원물" loading="lazy">
+    <img class="ken" src="https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?w=1920&q=74&fit=crop&auto=format" alt="정갈하게 플레이팅된 반찬 한 상" loading="lazy">
   </div>
   <div class="container hero-inner">
-    <p class="hero-eyebrow">산지에서 식탁까지 · 수제 반찬 라이브 커머스</p>
+    <p class="hero-eyebrow"><span class="lat">Damon Live</span><span class="ko">산지에서 식탁까지, 수제 반찬 라이브 커머스</span></p>
     <h1>오늘 만든 반찬을,<br>라이브로 만나다</h1>
     <p>담온의 주방을 그대로 보여드립니다. 방송 시간에 접속하면
     라이브 특가 방송으로 바로 연결되고, 만드는 과정을 눈으로 확인한 뒤 주문하세요.</p>
