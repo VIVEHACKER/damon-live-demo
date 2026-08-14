@@ -45,7 +45,7 @@ section{padding:clamp(4rem,9vw,7.5rem) 0}
 .skip{position:absolute;left:-9999px;top:0;background:var(--ink);color:#fff;padding:.6rem 1rem;z-index:99}
 .skip:focus{left:0}
 @media (prefers-reduced-motion: no-preference){
-  .rv{opacity:0;transform:translateY(22px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1)}
+  .rv{opacity:0;transform:translateY(12px);transition:opacity .9s cubic-bezier(.22,1,.36,1),transform .9s cubic-bezier(.22,1,.36,1)}
   .rv.on{opacity:1;transform:none}
 }
 
@@ -68,6 +68,19 @@ header.solid .nav-links{color:var(--ink-2)}
 .hero{position:relative;min-height:92svh;display:flex;align-items:flex-end;color:#fff;padding:0}
 .hero-bg{position:absolute;inset:0;overflow:hidden}
 .hero-bg img{width:100%;height:100%;object-fit:cover}
+/* ── 시네마그래프 히어로: 켄번즈 줌 + 크로스페이드 (영상형 히어로) ── */
+.hero-bg .ken{
+  position:absolute;inset:0;opacity:0;
+  transition:opacity 2.2s ease-in-out;will-change:opacity,transform;
+}
+.hero-bg .ken.active{opacity:1}
+@media (prefers-reduced-motion: no-preference){
+  .hero-bg .ken:nth-child(1){animation:kenzoom 16s ease-in-out infinite alternate}
+  .hero-bg .ken:nth-child(2){animation:kenzoom2 16s ease-in-out infinite alternate}
+  .hero-bg .ken:nth-child(3){animation:kenzoom 16s ease-in-out infinite alternate;animation-delay:-8s}
+}
+@keyframes kenzoom{from{transform:scale(1) translate(0,0)}to{transform:scale(1.1) translate(-1.4%,-1%)}}
+@keyframes kenzoom2{from{transform:scale(1.1) translate(1.2%,0)}to{transform:scale(1) translate(0,.8%)}}
 .hero-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(23,19,16,.44) 0%,rgba(23,19,16,.16) 42%,rgba(23,19,16,.8) 100%)}
 .hero-inner{position:relative;width:100%;padding-bottom:clamp(3rem,7vw,5.5rem)}
 .hero-eyebrow{color:#F0DFC5;font-size:.78rem;font-weight:700;letter-spacing:.26em;text-transform:uppercase}
@@ -83,21 +96,46 @@ header.solid .nav-links{color:var(--ink-2)}
 .btn-fill{background:#fff;color:var(--ink)}
 .btn-ghost{border:1px solid rgba(255,255,255,.55);color:#fff}
 .next-chip{
-  display:inline-flex;align-items:center;gap:.7rem;margin-top:2.2rem;
-  background:rgba(0,0,0,.38);border:1px solid rgba(255,255,255,.22);
-  backdrop-filter:blur(8px);border-radius:999px;padding:.55rem 1.1rem;font-size:.85rem;
+  display:inline-flex;align-items:baseline;gap:1rem;margin-top:2.6rem;
+  padding-top:1.1rem;border-top:1px solid rgba(255,255,255,.34);
+  font-size:.88rem;color:rgba(255,255,255,.82);
 }
-.next-chip .dot{width:8px;height:8px;border-radius:50%;background:#F0A56C}
-.next-chip b{font-weight:700}
+.next-chip .label{font-size:.66rem;font-weight:800;letter-spacing:.28em;color:#F0DFC5;text-transform:uppercase}
+.next-chip b{font-family:var(--serif);font-weight:700;font-size:1.02rem;color:#fff}
 
-/* ── 편성표 ── */
-.sched-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin-top:2.4rem}
-.sched-cell{background:var(--bg);padding:1.5rem 1.4rem;position:relative}
-.sched-cell .day{font-size:.74rem;font-weight:800;letter-spacing:.16em;color:var(--accent);text-transform:uppercase}
-.sched-cell h3{font-size:1.05rem;font-weight:700;margin:.4rem 0 .2rem}
-.sched-cell .when{font-family:var(--serif);font-size:1.3rem;font-weight:700;color:var(--accent-deep)}
-.sched-cell .desc{font-size:.84rem;color:var(--ink-3);margin-top:.4rem}
-.sched-note{font-size:.8rem;color:var(--ink-3);margin-top:.9rem}
+/* ── 편성표 (에디토리얼 타임테이블) ── */
+.sched-list{margin-top:2.8rem;border-top:1px solid var(--line)}
+.sched-row{
+  display:grid;grid-template-columns:120px 1fr auto;gap:clamp(1rem,3vw,2.5rem);
+  align-items:baseline;padding:1.5rem .4rem;border-bottom:1px solid var(--line-soft);
+  transition:background .25s,padding .25s;
+}
+.sched-row:hover{background:rgba(166,75,33,.035)}
+.sched-row .day{
+  font-size:.72rem;font-weight:800;letter-spacing:.2em;color:var(--ink-3);
+  text-transform:uppercase;display:flex;align-items:center;gap:.5rem;
+}
+.sched-row .title-wrap{display:flex;align-items:baseline;gap:1rem;flex-wrap:wrap}
+.sched-row h3{font-family:var(--serif);font-weight:700;font-size:clamp(1.1rem,2vw,1.35rem);letter-spacing:-.01em}
+.sched-row .desc{font-size:.84rem;color:var(--ink-3)}
+.sched-row .when{
+  font-family:var(--serif);font-size:1.1rem;font-weight:600;color:var(--ink-2);
+  font-variant-numeric:tabular-nums;white-space:nowrap;
+}
+.sched-row.today .day{color:var(--accent)}
+.sched-row.today .day::after{
+  content:"오늘";font-family:var(--sans);font-size:.62rem;font-weight:700;
+  letter-spacing:.08em;color:var(--accent);border:1px solid rgba(166,75,33,.4);
+  border-radius:3px;padding:.08rem .34rem;
+}
+.sched-row.is-onair h3{color:var(--accent-deep)}
+.sched-row.is-onair .when::before{
+  content:"ON AIR";font-family:var(--sans);font-size:.62rem;font-weight:800;
+  letter-spacing:.16em;color:var(--live);margin-right:.7rem;vertical-align:.14em;
+  animation:pulse 1.6s infinite;
+}
+.sched-note{font-size:.8rem;color:var(--ink-3);margin-top:1.1rem}
+@media (max-width:640px){.sched-row{grid-template-columns:1fr;gap:.3rem}}
 
 /* ── 다시보기 (다크 밴드) ── */
 .replay{position:relative;color:#fff;overflow:hidden}
@@ -174,103 +212,173 @@ footer{background:var(--night);color:rgba(255,255,255,.72);padding:3.5rem 0 2.5r
 .f-bottom{padding-top:1.6rem;font-size:.76rem;color:rgba(255,255,255,.4);display:flex;flex-wrap:wrap;gap:.6rem;justify-content:space-between}
 .demo-tag{color:#E8C4A8}
 
-/* ── ★ 라이브 방송 전환 레이어 ── */
-.live-layer{position:fixed;inset:0;z-index:100;background:var(--night);color:#fff;display:none;flex-direction:column;overflow-y:auto}
+/* ── ★ 라이브 방송 전환 레이어 (시네마틱 풀블리드) ── */
+:root{--champagne:#D9B88A}
+.live-layer{position:fixed;inset:0;z-index:100;background:var(--night);color:#fff;display:none;flex-direction:column;overflow:hidden}
 .live-layer.on{display:flex}
-.live-top{display:flex;align-items:center;justify-content:space-between;padding:1.1rem clamp(1.2rem,4vw,2.5rem);border-bottom:1px solid rgba(255,255,255,.1)}
-.live-brand{display:flex;align-items:center;gap:.9rem}
-.live-brand b{font-family:var(--serif);font-weight:900;font-size:1.15rem}
-.live-badge{display:inline-flex;align-items:center;gap:.45rem;background:var(--live);border-radius:4px;padding:.28rem .6rem;font-size:.72rem;font-weight:800;letter-spacing:.12em}
-.live-badge .pulse{width:7px;height:7px;border-radius:50%;background:#fff;animation:pulse 1.4s infinite}
+.live-backdrop{position:absolute;inset:0}
+.live-backdrop img{width:100%;height:100%;object-fit:cover}
+@media (prefers-reduced-motion: no-preference){
+  .live-layer.on .live-backdrop img{animation:kenburns 22s ease-out forwards}
+}
+@keyframes kenburns{from{transform:scale(1.06)}to{transform:scale(1)}}
+.live-backdrop::after{
+  content:"";position:absolute;inset:0;
+  background:
+    linear-gradient(90deg,rgba(13,10,8,.88) 0%,rgba(13,10,8,.55) 45%,rgba(13,10,8,.35) 100%),
+    linear-gradient(180deg,rgba(13,10,8,.55) 0%,transparent 30%,transparent 55%,rgba(13,10,8,.9) 100%);
+}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
-.live-exit{border:1px solid rgba(255,255,255,.3);background:none;color:#fff;cursor:pointer;font:inherit;font-size:.82rem;padding:.5rem 1rem;border-radius:999px}
-.live-exit:hover{background:rgba(255,255,255,.1)}
-.live-main{flex:1;display:grid;grid-template-columns:1.7fr 1fr;gap:1.5rem;padding:clamp(1.2rem,3vw,2.5rem);max-width:1280px;width:100%;margin:0 auto}
-.live-player{
-  aspect-ratio:16/9;border-radius:12px;position:relative;overflow:hidden;
-  border:1px solid rgba(255,255,255,.12);display:grid;place-items:center;
+.live-top{
+  position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;
+  padding:1.4rem clamp(1.4rem,4vw,3rem);
 }
-.live-player img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.5}
-.live-player::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(23,19,16,.2),rgba(23,19,16,.55))}
-.live-player .yt-note{position:absolute;top:1rem;left:1rem;z-index:2;font-size:.72rem;color:rgba(255,255,255,.65);letter-spacing:.08em}
-.live-player .big-play{position:relative;z-index:2;width:76px;height:76px;border-radius:50%;background:rgba(214,64,43,.94);display:grid;place-items:center;box-shadow:0 8px 40px rgba(214,64,43,.4)}
-.live-player .big-play::after{content:"";border-style:solid;border-width:13px 0 13px 22px;border-color:transparent transparent transparent #fff;margin-left:5px}
-.live-side h2{font-family:var(--serif);font-weight:900;font-size:1.5rem;line-height:1.35}
-.live-side .now{font-size:.85rem;color:#E8C4A8;margin-top:.4rem}
-.deal-list{margin-top:1.5rem;display:grid;gap:.5rem}
-.deal{display:flex;align-items:center;justify-content:space-between;gap:.8rem;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:.85rem 1rem}
-.deal .name{font-size:.9rem;font-weight:700}
-.deal .sub{font-size:.74rem;color:rgba(255,255,255,.5)}
-.deal .dp{text-align:right}
-.deal .dp b{font-family:var(--serif);font-size:1.05rem;color:#F0A56C}
-.deal .dp s{display:block;font-size:.72rem;color:rgba(255,255,255,.4)}
-.deal-cta{
-  margin-top:.9rem;display:block;text-align:center;background:var(--live);color:#fff;
-  font-weight:800;font-size:.95rem;padding:.9rem;border-radius:999px;transition:filter .2s;
+.live-brand{display:flex;align-items:center;gap:1.1rem}
+.live-brand b{font-family:var(--serif);font-weight:900;font-size:1.2rem;letter-spacing:-.01em}
+.onair{
+  display:inline-flex;align-items:center;gap:.5rem;
+  font-size:.68rem;font-weight:800;letter-spacing:.28em;color:rgba(255,255,255,.85);
+  padding-left:1.1rem;border-left:1px solid rgba(255,255,255,.25);
 }
-.deal-cta:hover{filter:brightness(1.12)}
-.live-return{margin-top:1.3rem;font-size:.78rem;color:rgba(255,255,255,.45);line-height:1.6}
-@media (max-width:900px){.live-main{grid-template-columns:1fr}}
+.onair .dot{width:6px;height:6px;border-radius:50%;background:var(--live);animation:pulse 1.6s infinite;box-shadow:0 0 12px rgba(214,64,43,.8)}
+.live-exit{
+  border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.04);
+  backdrop-filter:blur(8px);color:rgba(255,255,255,.9);cursor:pointer;font:inherit;
+  font-size:.8rem;font-weight:600;letter-spacing:.02em;padding:.55rem 1.15rem;border-radius:2px;
+  transition:background .25s,border-color .25s;
+}
+.live-exit:hover{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.5)}
+.live-main{
+  position:relative;z-index:2;flex:1;display:grid;grid-template-columns:1.5fr 1fr;
+  gap:clamp(2rem,5vw,5rem);align-items:end;
+  padding:clamp(1.4rem,4vw,3rem);padding-bottom:clamp(2.2rem,5vw,4rem);
+  max-width:1360px;width:100%;margin:0 auto;
+}
+.live-hero .live-eyebrow{
+  font-size:.7rem;font-weight:700;letter-spacing:.3em;color:var(--champagne);
+  text-transform:uppercase;display:flex;align-items:center;gap:.8rem;
+}
+.live-hero .live-eyebrow::before{content:"";width:34px;height:1px;background:var(--champagne)}
+.live-hero h2{
+  font-family:var(--serif);font-weight:900;letter-spacing:-.02em;
+  font-size:clamp(2.2rem,4.6vw,3.6rem);line-height:1.22;margin:1rem 0 .9rem;
+}
+.live-hero .now{font-size:.95rem;color:rgba(255,255,255,.72);max-width:26em;line-height:1.7}
+.live-actions{display:flex;align-items:center;gap:1.3rem;margin-top:2rem}
+.play-glass{
+  display:inline-flex;align-items:center;gap:.9rem;cursor:pointer;
+  color:#fff;font-weight:600;font-size:.92rem;letter-spacing:.02em;text-decoration:none;
+}
+.play-glass .ring{
+  width:58px;height:58px;border-radius:50%;flex-shrink:0;
+  border:1px solid rgba(255,255,255,.5);background:rgba(255,255,255,.06);
+  backdrop-filter:blur(6px);display:grid;place-items:center;
+  transition:background .3s,transform .3s;
+}
+.play-glass:hover .ring{background:rgba(255,255,255,.16);transform:scale(1.06)}
+.play-glass .ring::after{content:"";border-style:solid;border-width:8px 0 8px 13px;border-color:transparent transparent transparent #fff;margin-left:3px}
+.play-glass .sub{display:block;font-size:.72rem;font-weight:400;color:rgba(255,255,255,.5);letter-spacing:.06em;margin-top:.15rem}
+.live-return{margin-top:1.8rem;font-size:.75rem;color:rgba(255,255,255,.38);line-height:1.65;max-width:30em}
 
-/* ── 미리보기 플로팅 버튼 ── */
-.live-preview-btn{
-  position:fixed;right:1.4rem;bottom:1.4rem;z-index:60;cursor:pointer;border:0;font:inherit;
-  display:flex;align-items:center;gap:.55rem;background:var(--night);color:#fff;
-  padding:.8rem 1.3rem;border-radius:999px;font-size:.85rem;font-weight:700;
-  box-shadow:0 10px 30px rgba(23,19,16,.35);transition:transform .2s;
+/* 우측 특가 레일 — 글래스 패널 + 헤어라인 */
+.deal-rail{
+  background:rgba(13,10,8,.5);backdrop-filter:blur(18px);
+  border:1px solid rgba(255,255,255,.12);border-radius:4px;
+  padding:clamp(1.3rem,2.5vw,1.9rem);
 }
-.live-preview-btn:hover{transform:translateY(-3px)}
-.live-preview-btn .dot{width:8px;height:8px;border-radius:50%;background:var(--live);animation:pulse 1.4s infinite}
+.deal-rail .rail-label{
+  display:flex;align-items:baseline;justify-content:space-between;
+  padding-bottom:1rem;border-bottom:1px solid rgba(255,255,255,.14);
+}
+.deal-rail .rail-label b{font-size:.72rem;font-weight:800;letter-spacing:.26em;color:var(--champagne)}
+.deal-rail .rail-label span{font-size:.7rem;color:rgba(255,255,255,.4)}
+.deal{
+  display:flex;align-items:baseline;justify-content:space-between;gap:1rem;
+  padding:1.05rem 0;border-bottom:1px solid rgba(255,255,255,.08);
+}
+.deal .name{font-size:.92rem;font-weight:600;letter-spacing:.01em}
+.deal .sub{font-size:.72rem;color:rgba(255,255,255,.42);margin-top:.15rem}
+.deal .dp{text-align:right;white-space:nowrap}
+.deal .dp b{font-family:var(--serif);font-size:1.12rem;font-weight:700;color:var(--champagne);font-variant-numeric:tabular-nums}
+.deal .dp s{display:block;font-size:.7rem;color:rgba(255,255,255,.35);font-variant-numeric:tabular-nums}
+.deal-cta{
+  margin-top:1.4rem;display:block;text-align:center;
+  border:1px solid var(--champagne);color:var(--champagne);
+  font-weight:700;font-size:.84rem;letter-spacing:.18em;padding:.95rem;border-radius:2px;
+  transition:background .3s,color .3s;
+}
+.deal-cta:hover{background:var(--champagne);color:var(--night)}
+@media (max-width:900px){
+  .live-layer{overflow-y:auto}
+  .live-main{grid-template-columns:1fr;align-items:start;gap:2rem}
+}
+
+/* ── 미리보기 컨트롤 (헤어라인 글래스) ── */
+.live-preview-btn{
+  position:fixed;right:1.5rem;bottom:1.5rem;z-index:60;cursor:pointer;font:inherit;
+  display:flex;align-items:center;gap:.6rem;
+  background:rgba(23,19,16,.62);backdrop-filter:blur(14px);
+  border:1px solid rgba(255,255,255,.16);color:rgba(255,255,255,.92);
+  padding:.6rem 1.05rem;border-radius:2px;
+  font-size:.75rem;font-weight:600;letter-spacing:.14em;
+  box-shadow:0 4px 24px rgba(23,19,16,.18);
+  transition:background .3s,border-color .3s;
+}
+.live-preview-btn:hover{background:rgba(23,19,16,.85);border-color:rgba(255,255,255,.4)}
+.live-preview-btn .dot{width:6px;height:6px;border-radius:50%;background:var(--live);animation:pulse 1.6s infinite}
 </style>
 </head>
 <body>
 <a class="skip" href="#main">본문으로 건너뛰기</a>
 
-<!-- ═══ ★ 방송 시간 자동 라이브 전환 레이어 ═══ -->
+<!-- ═══ ★ 방송 시간 자동 라이브 전환 레이어 (시네마틱) ═══ -->
 <div class="live-layer" id="liveLayer" role="dialog" aria-modal="true" aria-label="라이브 방송">
+  <div class="live-backdrop" aria-hidden="true">
+    <img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=1920&q=74&fit=crop&auto=format" alt="">
+  </div>
   <div class="live-top">
     <div class="live-brand">
-      <b>담온 LIVE</b>
-      <span class="live-badge"><span class="pulse"></span>LIVE</span>
+      <b>담온</b>
+      <span class="onair"><span class="dot"></span>ON AIR</span>
     </div>
-    <button class="live-exit" id="liveExit">홈 화면으로 →</button>
+    <button class="live-exit" id="liveExit">홈 화면으로</button>
   </div>
   <div class="live-main">
-    <div>
-      <div class="live-player">
-        <img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=1400&q=70&fit=crop&auto=format" alt="주방에서 요리를 선보이는 진행자">
-        <span class="yt-note">LIVE 플레이어 임베드 영역 (유튜브 · 네이버 쇼핑라이브 연동)</span>
-        <div class="big-play" aria-hidden="true"></div>
+    <div class="live-hero">
+      <p class="live-eyebrow">Damon Live · 지금 방송 중</p>
+      <h2 id="liveTitle">심야 야식 라이브</h2>
+      <p class="now" id="liveNow">담온의 주방을 실시간으로 보여드립니다. 라이브 특가는 방송 중에만 적용됩니다.</p>
+      <div class="live-actions">
+        <a class="play-glass" href="#" aria-label="방송 입장하기">
+          <span class="ring" aria-hidden="true"></span>
+          <span>방송 입장하기<span class="sub">유튜브 · 네이버 쇼핑라이브 연동 영역</span></span>
+        </a>
       </div>
-    </div>
-    <aside class="live-side">
-      <h2 id="liveTitle">저녁 반찬 라이브</h2>
-      <p class="now" id="liveNow">지금 방송이 진행 중입니다 — 방송 중에만 라이브 특가가 적용됩니다</p>
-      <div class="deal-list">
-        <div class="deal">
-          <div><div class="name">수제 장조림 500g</div><div class="sub">당일 생산 · 냉장 배송</div></div>
-          <div class="dp"><s>₩18,000</s><b>₩14,900</b></div>
-        </div>
-        <div class="deal">
-          <div><div class="name">제철 밑반찬 6종 세트</div><div class="sub">이번 주 구성</div></div>
-          <div class="dp"><s>₩32,000</s><b>₩25,900</b></div>
-        </div>
-        <div class="deal">
-          <div><div class="name">정기배송 첫 달</div><div class="sub">건너뛰기 · 해지 자유</div></div>
-          <div class="dp"><s>₩29,000</s><b>₩19,900</b></div>
-        </div>
-      </div>
-      <a class="deal-cta" href="#notify">라이브 특가로 주문하기</a>
       <p class="live-return">
-        방송 시간에는 홈페이지 접속 시 이 화면이 우선 노출되고,
-        방송 종료 후 일반 메인 페이지로 자동 복귀합니다. (본 데모에서 실동작 구현)
+        방송 시간에는 접속 시 이 화면이 우선 노출되고, 종료 후 메인으로 자동 복귀합니다.
       </p>
+    </div>
+    <aside class="deal-rail" aria-label="라이브 특가">
+      <div class="rail-label"><b>LIVE ONLY</b><span>방송 중 한정 특가</span></div>
+      <div class="deal">
+        <div><div class="name">수제 장조림 500g</div><div class="sub">당일 생산 · 냉장 배송</div></div>
+        <div class="dp"><s>₩18,000</s><b>₩14,900</b></div>
+      </div>
+      <div class="deal">
+        <div><div class="name">제철 밑반찬 6종 세트</div><div class="sub">이번 주 구성</div></div>
+        <div class="dp"><s>₩32,000</s><b>₩25,900</b></div>
+      </div>
+      <div class="deal">
+        <div><div class="name">정기배송 첫 달</div><div class="sub">건너뛰기 · 해지 자유</div></div>
+        <div class="dp"><s>₩29,000</s><b>₩19,900</b></div>
+      </div>
+      <a class="deal-cta" href="#notify">라이브 특가로 주문</a>
     </aside>
   </div>
 </div>
 
 <button class="live-preview-btn" id="livePreview" aria-label="라이브 전환 기능 미리보기">
-  <span class="dot"></span> 라이브 전환 미리보기
+  <span class="dot"></span> LIVE 미리보기
 </button>
 
 <header id="hd">
@@ -289,8 +397,10 @@ footer{background:var(--night);color:rgba(255,255,255,.72);padding:3.5rem 0 2.5r
 <main id="main">
 <!-- ═══ 히어로 ═══ -->
 <section class="hero" aria-label="브랜드 소개">
-  <div class="hero-bg">
-    <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1920&q=78&fit=crop&auto=format" alt="정성껏 차려진 따뜻한 상차림" fetchpriority="high">
+  <div class="hero-bg" id="heroSlides">
+    <img class="ken active" src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1920&q=78&fit=crop&auto=format" alt="정성껏 차려진 따뜻한 상차림" fetchpriority="high">
+    <img class="ken" src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=1920&q=74&fit=crop&auto=format" alt="주방에서 요리하는 담온의 손길" loading="lazy">
+    <img class="ken" src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=1920&q=74&fit=crop&auto=format" alt="형형색색의 신선한 제철 원물" loading="lazy">
   </div>
   <div class="container hero-inner">
     <p class="hero-eyebrow">산지에서 식탁까지 · 수제 반찬 라이브 커머스</p>
@@ -302,8 +412,8 @@ footer{background:var(--night);color:rgba(255,255,255,.72);padding:3.5rem 0 2.5r
       <a class="btn btn-ghost" href="#products">대표 제품 보기</a>
     </div>
     <div class="next-chip" id="nextChip">
-      <span class="dot"></span>
-      <span>다음 라이브 — <b id="nextName">저녁 반찬 라이브</b> <span id="nextIn"></span></span>
+      <span class="label">Next Live</span>
+      <span><b id="nextName">저녁 반찬 라이브</b> <span id="nextIn"></span></span>
     </div>
   </div>
 </section>
@@ -316,12 +426,32 @@ footer{background:var(--night);color:rgba(255,255,255,.72);padding:3.5rem 0 2.5r
       <h2 class="sec-title">이번 주 라이브 편성표</h2>
       <p class="sec-lede">방송 시간이 되면 홈페이지가 라이브 화면으로 자동 전환됩니다. 놓치면 다시보기로 만나보세요.</p>
     </div>
-    <div class="sched-grid rv">
-      <div class="sched-cell"><span class="day">MON 월요일</span><h3>저녁 반찬 라이브</h3><div class="when">19:00 – 20:00</div><p class="desc">이번 주 새 반찬 공개 · 라이브 특가</p></div>
-      <div class="sched-cell"><span class="day">WED 수요일</span><h3>제철 원물 라이브</h3><div class="when">19:00 – 20:00</div><p class="desc">산지 직송 원물 소개 · 한정 수량</p></div>
-      <div class="sched-cell"><span class="day">FRI 금요일</span><h3>주말 밥상 라이브</h3><div class="when">19:00 – 20:30</div><p class="desc">주말 상차림 제안 · 세트 특가</p></div>
-      <div class="sched-cell"><span class="day">FRI 금요일</span><h3>심야 야식 라이브</h3><div class="when">22:00 – 23:00</div><p class="desc">야식 안주 반찬 · 심야 한정 특가</p></div>
-      <div class="sched-cell"><span class="day">SAT 토요일</span><h3>브런치 라이브</h3><div class="when">11:00 – 12:00</div><p class="desc">주말 아침 밥상 · 가족 세트</p></div>
+    <div class="sched-list rv">
+      <div class="sched-row" data-day="1" data-start="19:00" data-len="60">
+        <span class="day">Mon</span>
+        <div class="title-wrap"><h3>저녁 반찬 라이브</h3><span class="desc">이번 주 새 반찬 공개 · 라이브 특가</span></div>
+        <span class="when">19:00 – 20:00</span>
+      </div>
+      <div class="sched-row" data-day="3" data-start="19:00" data-len="60">
+        <span class="day">Wed</span>
+        <div class="title-wrap"><h3>제철 원물 라이브</h3><span class="desc">산지 직송 원물 소개 · 한정 수량</span></div>
+        <span class="when">19:00 – 20:00</span>
+      </div>
+      <div class="sched-row" data-day="5" data-start="19:00" data-len="90">
+        <span class="day">Fri</span>
+        <div class="title-wrap"><h3>주말 밥상 라이브</h3><span class="desc">주말 상차림 제안 · 세트 특가</span></div>
+        <span class="when">19:00 – 20:30</span>
+      </div>
+      <div class="sched-row" data-day="5" data-start="22:00" data-len="60">
+        <span class="day">Fri</span>
+        <div class="title-wrap"><h3>심야 야식 라이브</h3><span class="desc">야식 안주 반찬 · 심야 한정 특가</span></div>
+        <span class="when">22:00 – 23:00</span>
+      </div>
+      <div class="sched-row" data-day="6" data-start="11:00" data-len="60">
+        <span class="day">Sat</span>
+        <div class="title-wrap"><h3>브런치 라이브</h3><span class="desc">주말 아침 밥상 · 가족 세트</span></div>
+        <span class="when">11:00 – 12:00</span>
+      </div>
     </div>
     <p class="sched-note">※ 편성과 가격은 데모 기준 예시입니다. 실제 구축 시 운영 일정과 연동됩니다.</p>
   </div>
@@ -541,7 +671,21 @@ function tick() {
     document.getElementById('nextIn').textContent = '· ' + label;
   }
 }
-tick(); setInterval(tick, 60000);
+/* 편성표 행에 오늘/온에어 상태 표시 */
+function markSchedule() {
+  const now = new Date();
+  document.querySelectorAll('.sched-row').forEach((row) => {
+    const day = Number(row.dataset.day);
+    row.classList.toggle('today', now.getDay() === day);
+    const [h, m] = row.dataset.start.split(':').map(Number);
+    const start = new Date(now); start.setHours(h, m, 0, 0);
+    const end = new Date(start.getTime() + Number(row.dataset.len) * 60000);
+    row.classList.toggle('is-onair', now.getDay() === day && now >= start && now < end);
+  });
+}
+markSchedule();
+
+tick(); setInterval(() => { tick(); markSchedule(); }, 60000);
 
 document.getElementById('liveExit').addEventListener('click', () => {
   userDismissed = true; previewMode = false;
@@ -552,6 +696,17 @@ document.getElementById('livePreview').addEventListener('click', () => {
   liveTitle.textContent = serviceWindow(new Date())?.name ?? '저녁 반찬 라이브';
   layer.classList.add('on'); document.body.style.overflow = 'hidden';
 });
+
+/* ── 히어로 슬라이드 순환 (영상형 히어로) ── */
+const slides = document.querySelectorAll('#heroSlides .ken');
+if (slides.length > 1 && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  let cur = 0;
+  setInterval(() => {
+    slides[cur].classList.remove('active');
+    cur = (cur + 1) % slides.length;
+    slides[cur].classList.add('active');
+  }, 6500);
+}
 
 /* ── 알림 폼 (데모) ── */
 document.getElementById('ntForm').addEventListener('submit', (e) => {
